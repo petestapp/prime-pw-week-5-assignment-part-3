@@ -27,4 +27,19 @@ addToCollection(`The Dreaming`, `Kate Bush`, 1982);
 addToCollection(`Hounds of Love`, `Kate Bush`, 1985);
 addToCollection(`The ArchAndroid`, `Janelle Monáe`, 2010);
 addToCollection(`Vespertine`, `Björk`, 2001);
-console.log(`collection:`, collection)
+console.log(`collection:`, collection);
+
+// [x] Add a function named `showCollection`. This function should:
+//   - Take in an array parameter. (This allows it to be reused to show any collection, like the results from the find or search.)
+//   - Console.log the number of items in the array.
+//   - Loop over the array and console.log each album's information formatted like: `TITLE by ARTIST, published in YEAR`.'
+let i = 0;
+function showCollection(array){
+    console.log(`number of items in collection:`, array.length);
+    for (i = 0; i < array.length; i++){
+        console.log(array[i].title + ` by ` + array[i].artist + `, published in ` + array[i].yearPublished);
+    }
+}
+
+// [x] Test the `showCollection` function.
+showCollection(collection);
