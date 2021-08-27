@@ -49,6 +49,7 @@ showCollection(collection);
 //   - Create an array to hold any results, empty to start
 //   - Loop through the `collection` and add any objects with a matching artist to the array.
 //   - Return the array with the matching results. If no results are found, return an empty array.
+console.log(`-----------------------------`);
 function findByArtist(artist){
     let artistMatches = [];
     for (i = 0; i < collection.length; i++){
@@ -56,14 +57,25 @@ function findByArtist(artist){
             artistMatches.push(collection[i])
         }
     }
-    return artistMatches && console.log(`artistMatches:`, artistMatches);
+    if (artistMatches.length === 1){
+        console.log(`your search for`, artist, `returned this album:` , artistMatches);
+    }
+    else if (artistMatches.length > 1){
+        console.log(`your search for`, artist, `returned these albums:`, artistMatches);
+    }
+    else {
+        console.log(`your search for`, artist, `did not return any results`);
+    }
+    return artistMatches;
 }
 
 
-// [x] Test the `findByArtist` function. Make sure to test with an artist you know is in the collection, as well as an artist you know is not in your collection. Check that for artists with multiple matches, all are found.
-findByArtist(`Tinashe`); //single result
-findByArtist(`Kate Bush`); //multiple result
 
+// [x] Test the `findByArtist` function. Make sure to test with an artist you know is in the collection, as well as an artist you know is not in your collection. Check that for artists with multiple matches, all are found.
+findByArtist(`Tinashe`); // single result
+findByArtist(`Kate Bush`); // multiple result
+findByArtist(`Katy Perry`); // no result
+console.log(`-----------------------------`);
 // [x] Create a function called `search`. This function should:
 //   - Take an input parameter for a search criteria object. Create your solution based on a search object that has these properties:
 //   ```
@@ -81,7 +93,16 @@ function search(searchInput){
             searchMatches.push(collection[i]);
         }
     }
-    return searchMatches && console.log(`searchMatches:`, searchMatches);
+    if (searchMatches.length === 1){
+        console.log(`your search for`, searchInput, `returned this album:` , searchMatches);
+    }
+    else if (searchMatches.length > 1){
+        console.log(`your search for`, searchInput, `returned these albums:`, searchMatches);
+    }
+    else {
+        console.log(`your search for`, searchInput, `did not return any results`);
+    }
+    return searchMatches;
 }
 
 search(1985); // should return `Hounds of Love`
