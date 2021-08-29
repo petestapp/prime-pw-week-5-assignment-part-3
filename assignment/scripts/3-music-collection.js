@@ -15,10 +15,10 @@ function addToCollection(titleInput, artistInput, yearPublishedInput, tracksInpu
         tracks: tracksInput
     }
     collection.push(newAlbum);
-    return newAlbum && console.log(`newAlbum added:`, newAlbum);
+    return newAlbum;
 }
 
-// [/] Add an array of `tracks` to your album objects. Each track should have a `name` and `duration`. You will need to update the functions to support this new property:
+// [x] Add an array of `tracks` to your album objects. Each track should have a `name` and `duration`. You will need to update the functions to support this new property:
 //   - Update the `addToCollection` function to also take an input parameter for the array of tracks.
 //   - Update `search` to allow a `trackName` search criteria.
 //   - Update the `showCollection` function to display the list of tracks for each album with its name and duration.
@@ -32,7 +32,6 @@ function addToCollection(titleInput, artistInput, yearPublishedInput, tracksInpu
 //     2. NAME: DURATION
 // ```
 
-console.log(`-------------------------------------------------`);
 function makeTrackList(nameArray, lengthArray, finalArray){
     for (let i = 0; i < nameArray.length; i++){
         let newTrack = {
@@ -43,6 +42,7 @@ function makeTrackList(nameArray, lengthArray, finalArray){
         finalArray.push(this[`track` + (i + 1)]);
     }
 }
+
 // tracklist generating section
 let threeThreeThreeTrackNames =
     [`Let Go`, `I Can See the Future`, `X (featuring Jeremih)`, `Shy Guy`, `Bouncin'`,`Unconditional`, `Angels (featuring Kaash Paige)`, `333 (featuring Absolutely)`, `Undo (Back to My Heart) (With Wax Motif)`, `Let Me Down Slowly`, `Last Call`, `The Chase`, `Pasadena (featuring Buddy)`, `Small Reminders`, `Bouncin' Pt. 2`, `It's a Wrap (featuring Quiet Child and Kudzai)`];
@@ -73,7 +73,7 @@ let houndsOfLoveTracks = [];
 makeTrackList(houndsOfLoveTrackNames, houndsOfLoveTrackLengths, houndsOfLoveTracks);
 
 let theArchAndroidTrackNames =
-    [`Suite II Overture`, `Dance or Die (featuring Saul Williams)`, `Faster`, `Locked Inside`, `Sir Greendown`, `Cold War`, `Tightrope (featuring Big Boi)`, `Neon Gumbo`, `Oh, Maker`, `Come Alive (The War of the Roses)`, `Mushrooms & Roses`, `Suite III Overture`, `Neon Valley Street`, `Make the Bus (featuring of Montreal)`, `Wondaland`, `57821 (featuring Deep Cotton)`, `Say You'll Go`, `BabopbyeYa`];
+    [`Suite II Overture`, `Dance or Die (featuring Saul Williams)`, `Faster`, `Locked Inside`, `SirGreendown `, `Cold War`, `Tightrope (featuring Big Boi)`, `Neon Gumbo`, `Oh, Maker`, `Come Alive (The War of the Roses)`, `Mushrooms & Roses`, `Suite III Overture`, `Neon Valley Street`, `Make the Bus (featuring of Montreal)`, `Wondaland`, `57821 (featuring Deep Cotton)`, `Say You'll Go`, `BabopbyeYa`];
 let theArchAndroidTrackLengths =
     [151, 192, 199, 256, 134, 203, 262, 97, 226, 202, 342, 101, 251, 199, 216, 196, 361, 527];
 let theArchAndroidTracks = [];
@@ -85,12 +85,6 @@ let vespertineTrackLengths =
     [310, 270, 310, 342, 316, 102, 282, 238, 158, 310, 281, 410];
 let vespertineTracks = [];
 makeTrackList(vespertineTrackNames, vespertineTrackLengths, vespertineTracks);
-
-// 2 mins = 120
-// 3 mins = 180
-// 4 mins = 240
-// 5 mins = 300
-// 6 mins = 360
 // end tracklist generating section
 
 // // [x] Test the `addToCollection` function:
@@ -109,23 +103,37 @@ console.log(`collection:`, collection);
 // //   - Take in an array parameter. (This allows it to be reused to show any collection, like the results from the find or search.)
 // //   - Console.log the number of items in the array.
 // //   - Loop over the array and console.log each album's information formatted like: `TITLE by ARTIST, published in YEAR`.'
+
+//   - Update the `showCollection` function to display the list of tracks for each album with its name and duration.
+// ```
+//     TITLE by ARTIST, published in YEAR:
+//     1. NAME: DURATION
+//     2. NAME: DURATION
+//     3. NAME: DURATION
+//     TITLE by ARTIST, published in YEAR:
+//     1. NAME: DURATION
+//     2. NAME: DURATION
+// ```
+
 let i = 0;
 function showCollection(array){
     console.log(`number of items in collection:`, array.length);
     for (i = 0; i < array.length; i++){
-        console.log(array[i].title + ` by ` + array[i].artist + `, published in ` + array[i].yearPublished);
+        console.log(array[i].title + ` by ` + array[i].artist + `, published in ` + array[i].yearPublished + `:`);
+        for (j = 0; j<array[i].tracks.length; j++){
+            console.log((j+1) + `. ` + array[i].tracks[j].trackName + `: ` + Math.floor((array[i].tracks[j].trackLength)/60) + `:` + (((array[i].tracks[j].trackLength)%60).toString()).padStart(2,`0`))
+        }
     }
 }
 
 // // [x] Test the `showCollection` function.
-// showCollection(collection);
+showCollection(collection);
 
 // [x] Add a function named `findByArtist`. This function should:
 //   - Take in `artist` (a string) parameter
 //   - Create an array to hold any results, empty to start
 //   - Loop through the `collection` and add any objects with a matching artist to the array.
 //   - Return the array with the matching results. If no results are found, return an empty array.
-
 function findByArtist(artist){
     let artistMatches = [];
     for (i = 0; i < collection.length; i++){
@@ -165,23 +173,32 @@ findByArtist(`Katy Perry`); // no result
 function search(searchInput){
     let searchMatches = [];
     for (i = 0; i < collection.length; i++){
-        if (searchInput === collection[i].title || searchInput === collection[i].artist || searchInput === collection[i].yearPublished){
+        if (searchInput === collection[i].title || searchInput === collection[i].artist || searchInput === collection[i].yearPublished || collection[i].tracks.find(({trackName}) => trackName === searchInput ) !== undefined ){
             searchMatches.push(collection[i]);
         }
     }
+    if (searchInput == null) {
+        console.log(`Your collection:`, collection);
+        return collection; 
+    }
     if (searchMatches.length === 1){
         console.log(`your search for`, searchInput, `returned this album:` , searchMatches);
+        return searchMatches;
     }
-    else if (searchMatches.length > 1){
+    if (searchMatches.length > 1){
         console.log(`your search for`, searchInput, `returned these albums:`, searchMatches);
+        return searchMatches;
     }
-    else {
+    if (searchMatches.length === 0){
         console.log(`your search for`, searchInput, `did not return any results`);
+        return searchMatches;
     }
-    return searchMatches;
 }
+
 
 search(1985); // should return `Hounds of Love`
 search(`Kate Bush`); // should return `The Dreaming` and `Hounds of Love`
 search(`Vespertine`); // should return `Vespertine`
 search('Katy Perry'); // should return an empty array
+search('Small Reminders'); // should return `333`
+search(); // should return full collection
