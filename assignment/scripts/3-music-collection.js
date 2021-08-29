@@ -31,7 +31,6 @@ function addToCollection(titleInput, artistInput, yearPublishedInput, tracksInpu
 //     1. NAME: DURATION
 //     2. NAME: DURATION
 // ```
-
 function makeTrackList(nameArray, lengthArray, finalArray){
     for (let i = 0; i < nameArray.length; i++){
         let newTrack = {
@@ -103,18 +102,6 @@ console.log(`collection:`, collection);
 // //   - Take in an array parameter. (This allows it to be reused to show any collection, like the results from the find or search.)
 // //   - Console.log the number of items in the array.
 // //   - Loop over the array and console.log each album's information formatted like: `TITLE by ARTIST, published in YEAR`.'
-
-//   - Update the `showCollection` function to display the list of tracks for each album with its name and duration.
-// ```
-//     TITLE by ARTIST, published in YEAR:
-//     1. NAME: DURATION
-//     2. NAME: DURATION
-//     3. NAME: DURATION
-//     TITLE by ARTIST, published in YEAR:
-//     1. NAME: DURATION
-//     2. NAME: DURATION
-// ```
-
 let i = 0;
 function showCollection(array){
     console.log(`number of items in collection:`, array.length);
@@ -153,8 +140,6 @@ function findByArtist(artist){
     return artistMatches;
 }
 
-
-
 // // [x] Test the `findByArtist` function. Make sure to test with an artist you know is in the collection, as well as an artist you know is not in your collection. Check that for artists with multiple matches, all are found.
 findByArtist(`Tinashe`); // single result
 findByArtist(`Kate Bush`); // multiple result
@@ -169,7 +154,6 @@ findByArtist(`Katy Perry`); // no result
 // //     - Return a new array of all items in the `collection` matching *all* of the search criteria.
 // //     - If no results are found, return an empty array.
 // //     - If there is no search object or an empty search object provided as input, then return all albums in the `collection`.
-
 function search(searchInput){
     let searchMatches = [];
     for (i = 0; i < collection.length; i++){
@@ -194,7 +178,6 @@ function search(searchInput){
         return searchMatches;
     }
 }
-
 
 search(1985); // should return `Hounds of Love`
 search(`Kate Bush`); // should return `The Dreaming` and `Hounds of Love`
